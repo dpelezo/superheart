@@ -1,1 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Checker</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="form-validation.css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
 
+<body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://www.linkpicture.com/q/love.svg" alt="" width="72" height="72">
+        <h2>Heart Disease Checker</h2>
+        <p class="lead">This demo webapp is trained to detect the presence of HD and it's accuracy is 70%, Please help us improve it by checking your doctors results. You are provided with 4 Values (1,2,3,4) Presence of HD and 0 Absence of HD.</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="success">Your Result</span>
+            <span class="badge badge-success badge-pill">{{ prediction_text }}</span>
+             <span class="badge badge-danger badge-pill">{{ prediction_danger }}</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{ prediction_result }}</h6>
+                <small class="text-muted">{{ prediction_info }}</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-7 order-md-1">
+          <h4 class="mb-3">What are your symptoms</h4>
+          <form action="/predict" method="post" name="features" class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="age">Your Age</label>
+                <input name="age" type="number" class="form-control"  placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Valid Age is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for ="gender">Sex</label>
+                <select name="gender" class="custom-select d-block w-100"  required>
+                  <option value="">Choose...</option>
+                  <option value="1">Male</option>
+                  <option value="0">Female</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid Sex.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cp" >CP</label>
+              <select name="cp" class="custom-select d-block w-100"  required>
+                <option value="">Choose...</option>
+                <option value="1">typical angina</option>
+                <option value="2">atypical angina</option>
+                <option value="3">non-anginal pain</option>
+                <option value="4">asymptomatic</option>
+
+              </select>
+              <div class="invalid-feedback">
+                  Please provide a valid answer.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for ="trestbps">Blood Pressure</label>
+              <div class="input-group">
+                <input name="trestbps" type="number" class="form-control"  placeholder="trestbps" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="chol">Cholesterol Level</label>
+              <input name="chol" type="number" class="form-control"  placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Valid Cholesterol is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="fps" >Sugar Level <span class="text-muted">
+              <select name="fps" class="custom-select d-block w-100" id="state" required>
+                <option value="">Choose...</option>
+                <option value="1">High</option>
+                <option value="0">Normal</option>
+              </select>
+              <div class="invalid-feedback">
+                Please enter a valid sugar level.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="restecg">Reste CG</label>
+              <select name="restecg" class="custom-select d-block w-100"  required>
+                <option value="">Choose...</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+
+              </select>
+              <div class="invalid-feedback">
+                  Please provide a valid answer.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="thalach">Max Heart Rate <span class="text-muted">(Optional)</span></label>
+                <input name="thalach" type="number" class="form-control"  placeholder="Thalach">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="exang" >Exercise induced</label>
+                <select name="exang" class="custom-select d-block w-100"  required>
+                  <option value="">Choose...</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid answer.
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="oldpeak" >Old Peak</label>
+                <input name="oldpeak" type="number" class="form-control"  placeholder="OldPeak">
+                <div class="invalid-feedback">
+                  Please provide a valid answer.
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label  for="slope">Slope of The Exercise</label>
+                <select name="slope" class="custom-select d-block w-100"  required>
+                  <option value="">Choose...</option>
+                  <option value="1">Upsloping</option>
+                  <option value="2">Flat</option>
+                  <option value="3">Downsloping</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid answer.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="ca" >Number of major Vessels</label>
+                <select name="ca" class="custom-select d-block w-100"  required>
+                  <option value="">Choose...</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid answer.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="thal" >Thal</label>
+                <select name="thal" class="custom-select d-block w-100"  required>
+                  <option value="">Choose...</option>
+                  <option value="3">Normal</option>
+                  <option value="6">Fixed defect</option>
+                  <option value="7">Reversable Defect</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid answer.
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; Domingos Pelezo</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+        </ul>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+</body>
+</html>
